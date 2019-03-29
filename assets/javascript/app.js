@@ -81,8 +81,8 @@ $("#StartButton").click(function () {
         } else if (i === 0 && answer === false) {
             wrong++;
         }
-        $("#correct").text(correct);
-        $("#wrong").text(wrong);
+        $("#correct").text("Correct: " + correct);
+        $("#wrong").text("Wrong: " + wrong);
 
     }
 
