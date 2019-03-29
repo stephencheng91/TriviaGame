@@ -10,21 +10,37 @@ var questions = ["Cats are more populr than dogs in the US",
 //true //true false false true true
 //Create array to put answer selections.
 var answerOptions = ["True", "False"];
+var answer = false;
 var correct = 0;
 var wrong = 0;
 
 var intervalId;
-var number=10;
+var number = 10;
 
 function showQuestions(arry) {
+    $("#Questions").empty();
     $("#Questions").append(arry);
 }
 
 //Setting up buttons for selections
 function showOptions(arry) {
-    for (var j = 0; j < arry.length; j++) {
-        $("#Options").append("<button>"+arry[j]+"</button>");
-    }
+
+    $("#True").empty();
+    $("#False").empty();
+    $("#True").append("<button>" + arry[0] + "</button>");
+    $("#False").append("<button>" + arry[1] + "</button>");
+
+    $("#True").click(function () {
+        answer = true;
+        $("#True").hide();
+        $("#False").hide();
+    });
+
+    $("#False").click(function () {
+        answer = false;
+        $("#True").hide();
+        $("#False").hide();
+    });
 }
 
 function run() {
@@ -44,19 +60,31 @@ function stop() {
     clearInterval(intervalId);
 }
 
-function GameStart(num){
+function GameStart(num) {
     showQuestions(questions[num]);
     showOptions(answerOptions);
 }
 
-$("#StartButton").click(function(){
-    
-    $("#StartButton").hide();
-    run();
-    GameStart(1);
-    $("#Options").click(function(){
 
-    });
+
+$("#StartButton").click(function () {
+
+    $("#StartButton").hide();
+
+    for (var i = 0; i < questions.length; i++) {
+        run();
+        GameStart(i);
+        //Setting time out for 10 seconds
+        
+        if (i === 0 && answer === true) {
+            correct++;
+        } else if (i === 0 && answer === false) {
+            wrong++;
+        }
+        $("#correct").text(correct);
+        $("#wrong").text(wrong);
+
+    }
 
 });
 
